@@ -82,34 +82,43 @@
                         <div class="product-status-wrap">
                             <h4>Products List</h4>
                             <div class="add-product">
-                                <a href="edituser.jsp">Add Product</a>
+                                <a href="/users?action=create">Add Product</a>
                             </div>
                             <table>
                                 <tr>
-                                
-                                    <th>Product Title</th>
-                                    <th>Status</th>
-                                    <th>Purchases</th>
-                                    <th>Product sales</th>
-                                    <th>Stock</th>
-                                    <th>Price</th>
-                                    <th>Setting</th>
+                                    <th>ID</th>
+                                    <th>UserName</th>
+                                    <th>PassWord</th>
+                                    <th>FullName</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
                                 </tr>
-                                <tr>
-                                   
-                                    <td>Product Title 1</td>
-                                    <td>
-                                        <button class="pd-setting">Active</button>
-                                    </td>
-                                    <td>50</td>
-                                    <td>$750</td>
-                                    <td>Out Of Stock</td>
-                                    <td>$15</td>
-                                    <td>
-                                        <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                        <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                    </td>
-                                </tr>
+                                <c:forEach var="user" items="${listUser}">
+                                    <tr>
+                                        <td><c:out value="${user.getId()}"/></td>
+                                        <td><c:out value="${user.getUsername()}"/></td>
+                                        <td><c:out value="${user.getPassword()}"/></td>
+                                        <td><c:out value="${user.getFullName()}"/></td>
+                                        <td><c:out value="${user.getPhone()}"/></td>
+                                        <td><c:out value="${user.getAddress()}"/></td>
+                                        <td><c:out value="${user.getEmail()}"/></td>
+                                        <td>
+                                            <c:forEach items="${applicationScope.listRole }" var = "role">
+                                                <c:if test="${role.getId() == user.getRole()}">
+                                                    <c:out value="${role.getRole()}"/>
+                                                </c:if>
+                                            </c:forEach>
+                                        </td>
+
+                                        <td>
+                                            <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"> <a  href="/users?action=edit&id=${user.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></button>
+                                            <button data-toggle="tooltip" title="Delete" class="pd-setting-ed"><a href="/users?action=delete&id=${user.id}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                
                             </table>
                             <div class="custom-pagination">

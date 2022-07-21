@@ -2,12 +2,12 @@ package com.codegym.wine_manager.model;
 
 public class Role {
     private int id;
-    private Role role;
+    private String role;
     public Role(){
 
     }
 
-    public Role(int id, Role role) {
+    public Role(int id, String role) {
         this.id = id;
         this.role = role;
     }
@@ -20,11 +20,11 @@ public class Role {
         this.id = id;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }

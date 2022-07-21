@@ -8,6 +8,7 @@ public class ConnectMySQL {
     private String jdbcURL = "jdbc:mysql://localhost:3306/case_m3?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "230795";
+
     public Connection getConnection() {
         Connection connection = null;
         try {

@@ -21,7 +21,7 @@
       <nav class="sidebar-nav left-sidebar-menu-pro">
         <ul class="metismenu" id="menu1">
           <li class="active">
-            <a class="has-arrow" href="">
+            <a class="has-arrow" href="/user">
               <i class="icon nalika-home icon-wrap"></i>
               <span class="mini-click-non">Ecommerce</span>
             </a>
@@ -29,7 +29,7 @@
               <li><a title="Product List" href="/users?action=view"><span
                       class="mini-sub-pro">User List</span></a></li>
               <li><a title="Product Edit" href="/WEB-INF/admin/user/edituser.jsp"><span
-                      class="mini-sub-pro">Product Edit</span></a></li>
+                      class="mini-sub-pro">Product List</span></a></li>
             </ul>
           </li>
           <li>

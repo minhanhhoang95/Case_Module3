@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!doctype html><!doctype html>
+<!doctype html>
 <html class="no-js" lang="en">
 
 <head>
@@ -87,8 +87,7 @@
                         <div class="review-tab-pro-inner">
                             <ul id="myTab3" class="tab-review-design">
                                 <li class="active"><a href="#description"><i class="icon nalika-edit"
-                                                                             aria-hidden="true"></i> Edit User</a></li>
-
+                                                                             aria-hidden="true"></i> ADD USER</a></li>
                             </ul>
                             <div id="myTabContent" class="tab-content custom-product-edit">
                                 <div class="product-tab-list tab-pane fade active in" id="description">
@@ -96,37 +95,28 @@
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="review-content-section">
-                                                    <c:if test="${user != null}">
-                                                        <input type="hidden" name="id"
-                                                               value="<c:out value='${user.getId()}' />"/>
-                                                    </c:if>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-user"
                                                                                            aria-hidden="true"></i></span>
-                                                        <input type="text" class="form-control"
-                                                               name="username"
-                                                               value="<c:out value='${user.getUsername()}' />"
-                                                        />
+                                                        <input type="text" class="form-control" placeholder="User Name"
+                                                               name="username">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-edit"
                                                                                            aria-hidden="true"></i></span>
-                                                        <input type="text" class="form-control"
-                                                               value="<c:out value='${user.getPassword()}' />"
+                                                        <input type="text" class="form-control" placeholder="Password"
                                                                name="password">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-user"
                                                                                            aria-hidden="true"></i></span>
-                                                        <input type="text" class="form-control"
-                                                               value="<c:out value='${user.getFullName()}' />"
+                                                        <input type="text" class="form-control" placeholder="Full Name"
                                                                name="name">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-new-file"
                                                                                            aria-hidden="true"></i></span>
-                                                        <input type="text" class="form-control"
-                                                               value="<c:out value='${user.getPhone()}' />"
+                                                        <input type="text" class="form-control" placeholder="Phone"
                                                                name="phone">
                                                     </div>
 
@@ -137,35 +127,22 @@
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-edit"
                                                                                            aria-hidden="true"></i></span>
-                                                        <input type="text" class="form-control"
-                                                               value="<c:out value='${user.getAddress()}' />"
+                                                        <input type="text" class="form-control" placeholder="Address"
                                                                name="address">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i
                                                                 class="icon nalika-favorites-button"
                                                                 aria-hidden="true"></i></span>
-                                                        <input type="text" class="form-control"
-                                                               value="<c:out value='${user.getEmail()}' />"
+                                                        <input type="text" class="form-control" placeholder="Email"
                                                                name="email">
                                                     </div>
 
                                                     <select name="Role"
-                                                            class="form-control pro-edt-select form-control-primary"
-                                                    >
+                                                            class="form-control pro-edt-select form-control-primary">
 
-                                                        <c:forEach items="${applicationScope.listRole }" var="role">
-
-                                                            <c:choose>
-                                                                <c:when test="${role.getId() == user.getRole() }">
-                                                                    <option value="${role.getId() }"
-                                                                            selected>${role.getRole() }</option>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <option value="${role.getId() }">${role.getRole() }</option>
-                                                                </c:otherwise>
-                                                            </c:choose>
-
+                                                        <c:forEach items="${applicationScope.listRole}" var="role">
+                                                            <option value="${role.getId() }">${role.getRole() }</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
@@ -178,10 +155,11 @@
                                                     <input type="submit" value="Save"
                                                            class="btn btn-ctl-bt waves-effect waves-light m-r-10">
 
-                                                    <button class="btn btn-ctl-bt waves-effect waves-light"><a
-                                                            href="/users?action=view" value="Discard">Discard</a>
-                                                    </button>
+<%--                                                    <a href="/users?action=view"><input--%>
+<%--                                                            type="submit" value="Discard"--%>
+<%--                                                            class="btn btn-ctl-bt waves-effect waves-light"></a>--%>
 
+                                                    <button class="btn btn-ctl-bt waves-effect waves-light"><a href="/users?action=view" value="Discard">Discard</a></button>
 
                                                 </div>
                                             </div>
@@ -465,6 +443,7 @@
         </div>
     </div>
     <jsp:include page="/WEB-INF/admin/layout/footer.jsp"></jsp:include>
+
 </div>
 
 <!-- jquery

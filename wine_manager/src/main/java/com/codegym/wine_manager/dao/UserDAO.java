@@ -17,8 +17,7 @@ public class UserDAO implements IUserDAO {
 
     private static final String SELECT_USER_BY_ID = "select username,password,name,phone,address,email,Role" +
             " from user where id =?";
-    private static final String SELECT_ALL_USERS = "SELECT user.id,user.username,user.password,user.name,user.phone,user.address,user.email,role.role FROM user\n" +
-            "left join role on user.Role=role.id";
+    private static final String SELECT_ALL_USERS = "select * from user";
     private static final String DELETE_USERS_SQL = "delete from user where id = ?;";
     private static final String UPDATE_USERS_SQL = "update user set" +
             " username=?" +
@@ -46,7 +45,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(4, user.getPhone());
             preparedStatement.setString(5, user.getAddress());
             preparedStatement.setString(6, user.getEmail());
-            preparedStatement.setString(7, user.getRole());
+            preparedStatement.setInt(7, user.getRole());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -66,12 +65,12 @@ public class UserDAO implements IUserDAO {
             while (rs.next()){
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                String fullName = rs.getString("fullName");
+                String fullName = rs.getString("name");
                 String phone = rs.getString("phone");
                 String address = rs.getString("address");
                 String email = rs.getString("email");
-                String role = rs.getString("role");
-                user = new User(id, username, password,  fullName,  phone, address,  email,  role);
+                int role = rs.getInt("Role");
+                user = new User( username, password,  fullName,  phone, address,  email,  role);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -94,8 +93,8 @@ public class UserDAO implements IUserDAO {
                 String phone = rs.getString("phone");
                 String address = rs.getString("address");
                 String email = rs.getString("email");
-                String role = rs.getString("role");
-                users.add( new User(id, username, password,  fullName,  phone, address,  email,  role));
+                int role = rs.getInt("role");
+                users.add( new User(id, username, password, fullName, phone, address, email, role));
             }
         }catch (SQLException e){
             printSQLException(e);
@@ -119,13 +118,15 @@ public class UserDAO implements IUserDAO {
         boolean rowUpdated;
         try (Connection connection = connectMySQL.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
+
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getFullName());
             statement.setString(4, user.getPhone());
             statement.setString(5, user.getAddress());
             statement.setString(6, user.getEmail());
-            statement.setString(7,user.getRole());
+            statement.setInt(7,user.getRole());
+            statement.setInt(8,user.getId());
 
             rowUpdated = statement.executeUpdate() > 0;
         }
