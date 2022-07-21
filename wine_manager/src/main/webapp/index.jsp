@@ -71,7 +71,6 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="back-link back-backend">
-                    <a href="index.jsp" class="btn btn-primary">Back to Dashboard</a>
                 </div>
             </div>
         </div>
@@ -89,7 +88,7 @@
                         <form action="#" id="loginForm">
                             <div class="form-group">
                                 <label class="control-label" for="username">Username</label>
-                                <input type="text" placeholder="example@gmail.com" title="Please enter you username" required="" value="" name="username" id="username" class="form-control">
+                                <input type="text" placeholder="User Name" title="Please enter you username" required="" value="" name="username" id="username" class="form-control">
                                 <span class="help-block small">Your unique username to app</span>
                             </div>
                             <div class="form-group">

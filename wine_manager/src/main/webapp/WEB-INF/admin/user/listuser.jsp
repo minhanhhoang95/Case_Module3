@@ -65,6 +65,10 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <!--     css alert
+    ============================-->
+    <link rel="shortcut icon" href="assets\images\favicon.ico">
+    <link href="assets/js/sweetalert2.min.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -80,9 +84,9 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-status-wrap">
-                            <h4>Products List</h4>
+                            <h4>User List</h4>
                             <div class="add-product">
-                                <a href="/users?action=create">Add Product</a>
+                                <a href="/users?action=create">Add User</a>
                             </div>
                             <table>
                                 <tr>
@@ -114,13 +118,35 @@
                                         </td>
 
                                         <td>
-                                            <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"> <a  href="/users?action=edit&id=${user.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></button>
-                                            <button data-toggle="tooltip" title="Delete" class="pd-setting-ed"><a href="/users?action=delete&id=${user.id}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></button>
+                                            <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"> <a href="/users?action=edit&id=${user.id}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></button>
+                                            <button data-toggle="tooltip" title="Delete" class="pd-setting-ed"><a onclick=" showMessage(${user.id})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></button>
+
                                         </td>
                                     </tr>
                                 </c:forEach>
                                
                             </table>
+                            <script>
+                                function showMessage(id) {
+                                    // document.getElementById("dynamic-alert").addEventListener("click", () => {
+                                    //     Swal.fire ('Correct!', 'You got the answer right!', 'success');
+                                    // });
+
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "You won't be able to revert this!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes, delete it!'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = "/users?action=delete&id=" + id;
+                                        }
+                                    })
+                                }
+                            </script>
 <%--                            <div class="custom-pagination">--%>
 <%--								<ul class="pagination">--%>
 <%--									<li class="page-item"><a class="page-link" href="#">Previous</a></li>--%>
@@ -212,6 +238,11 @@
     <!-- main JS
 		============================================ -->
     <script src="js/main.js"></script>
+    <!-- js alert
+            ============================================ -->
+    <script src="assets/js/sweetalert2.min.js"></script>
+    <script src="assets\libs\toastr\toastr.min.js"></script>
+    <script src="assets\js\pages\toastr.init.js"></script>
 </body>
 
 </html>

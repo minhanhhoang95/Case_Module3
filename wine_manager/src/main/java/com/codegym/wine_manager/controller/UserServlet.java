@@ -78,7 +78,7 @@ public class UserServlet extends HttpServlet {
         dispatcher.forward(req, resp);
     }
     private void listNumberPage(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ClassNotFoundException, ServletException, IOException {
-        System.out.println("numberPage");
+//        System.out.println("numberPage");
         int page = 1;
         int recordsPerPage = 5;
         if (req.getParameter("page") != null) {
@@ -99,11 +99,11 @@ public class UserServlet extends HttpServlet {
 
     }
 
-    private void showNewForm(HttpServletRequest request, HttpServletResponse response)
+    private void showNewForm(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/admin/user/createuser.jsp");
-        dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/admin/user/createuser.jsp");
+        dispatcher.forward(req, resp);
     }
 
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp)
@@ -125,8 +125,10 @@ public class UserServlet extends HttpServlet {
 
         List<User> listUser = userDAO.selectAllUsers();
         req.setAttribute("listUser", listUser);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/admin/user/listuser.jsp");
-        dispatcher.forward(req, resp);
+//        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/admin/user/listuser.jsp");
+//        dispatcher.forward(req, resp);
+        resp.sendRedirect("/users");
+
     }
 
     @Override

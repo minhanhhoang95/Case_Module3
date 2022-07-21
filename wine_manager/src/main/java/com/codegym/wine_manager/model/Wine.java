@@ -3,7 +3,7 @@ package com.codegym.wine_manager.model;
 import java.time.Instant;
 
 public class Wine {
-    private long id;
+    private int id;
     private String title;
     private int quantity;
     private double price;
@@ -15,7 +15,7 @@ public class Wine {
 
     }
 
-    public Wine(long id, String title, int quantity, double price, String description) {
+    public Wine(int id, String title, int quantity, double price, String description) {
         this.id = id;
         this.title = title;
         this.quantity = quantity;
@@ -23,7 +23,14 @@ public class Wine {
         this.description = description;
     }
 
-    public Wine(long id, String title, int quantity, double price, String description, Instant createdAt, Instant updatedAt) {
+    public Wine(String title, int quantity, double price, String description) {
+        this.title = title;
+        this.quantity = quantity;
+        this.price = price;
+        this.description = description;
+    }
+
+    public Wine(int id, String title, int quantity, double price, String description, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.title = title;
         this.quantity = quantity;
@@ -33,11 +40,11 @@ public class Wine {
         this.updatedAt = updatedAt;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

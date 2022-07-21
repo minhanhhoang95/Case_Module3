@@ -26,10 +26,10 @@
               <span class="mini-click-non">Ecommerce</span>
             </a>
             <ul class="submenu-angle" aria-expanded="true">
-              <li><a title="Product List" href="/users?action=view"><span
+              <li><a title="User List" href="/users?action=view"><span
                       class="mini-sub-pro">User List</span></a></li>
-              <li><a title="Product Edit" href="/WEB-INF/admin/user/edituser.jsp"><span
-                      class="mini-sub-pro">Product List</span></a></li>
+              <li><a title="Product List" href="/wines"><span
+                      class="mini-sub-pro">Wine List</span></a></li>
             </ul>
           </li>
           <li>
