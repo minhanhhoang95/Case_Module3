@@ -121,15 +121,42 @@
                                 </c:forEach>
                                
                             </table>
-                            <div class="custom-pagination">
-								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">Next</a></li>
-								</ul>
-                            </div>
+<%--                            <div class="custom-pagination">--%>
+<%--								<ul class="pagination">--%>
+<%--									<li class="page-item"><a class="page-link" href="#">Previous</a></li>--%>
+<%--									<li class="page-item"><a class="page-link" href="#">1</a></li>--%>
+<%--									<li class="page-item"><a class="page-link" href="#">2</a></li>--%>
+<%--									<li class="page-item"><a class="page-link" href="#">3</a></li>--%>
+<%--									<li class="page-item"><a class="page-link" href="#">Next</a></li>--%>
+<%--								</ul>--%>
+<%--                            </div>--%>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+
+                                    <c:if test="${requestScope.currentPage != 1}">
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="/users?page=${requestScope.currentPage - 1}">Previous</a>
+                                        </li>
+                                    </c:if>
+                                    <c:forEach begin="1" end="${noOfPages}" var="i">
+                                        <c:choose>
+                                            <c:when test="${requestScope.currentPage eq i}">
+                                                <li class="page-item"><a class="page-link"
+                                                                         href="/users?page=${i}">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item"><a class="page-link"
+                                                                         href="/users?page=${i}">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="/users?page=${requestScope.currentPage + 1}">Next</a>
+                                        </li>
+                                    </c:if>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>

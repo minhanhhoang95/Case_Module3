@@ -15,4 +15,5 @@ public interface IUserDAO {
     public boolean deleteUser(int id) throws SQLException;
 
     public boolean updateUser(User user) throws SQLException;
+    List<User> getNumberPage(int offset, int noOfRecords)throws ClassNotFoundException,SQLException;
 }

@@ -49,13 +49,17 @@ public class UserServlet extends HttpServlet {
                     deleteUser(req, resp);
                     break;
                 case "view":
-                    listUser(req, resp);
+//                    listUser(req, resp);
+                    listNumberPage(req, resp);
                     break;
                 default:
-                    indexUser(req, resp);
+//                    indexUser(req, resp);
+                    listNumberPage(req, resp);
                     break;
+
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
             throw new ServletException(ex);
         }
     }
@@ -72,6 +76,27 @@ public class UserServlet extends HttpServlet {
         req.setAttribute("listUser", listUser);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/admin/user/listuser.jsp");
         dispatcher.forward(req, resp);
+    }
+    private void listNumberPage(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ClassNotFoundException, ServletException, IOException {
+        System.out.println("numberPage");
+        int page = 1;
+        int recordsPerPage = 5;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+        List<User> userList = userDAO.getNumberPage((page - 1) * recordsPerPage, recordsPerPage);
+        int noOfRecords = userDAO.getNoOfRecords();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+//        System.out.println("noOfPages" + noOfPages);
+//        System.out.println(noOfRecords);
+        req.setAttribute("listUser", userList);
+        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute("currentPage", page);
+
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/admin/user/listuser.jsp");
+        dispatcher.forward(req, resp);
+
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
