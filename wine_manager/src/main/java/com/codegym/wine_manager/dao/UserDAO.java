@@ -20,6 +20,8 @@ public class UserDAO implements IUserDAO {
             " from user where id =?";
     private static final String SELECT_ALL_USERS = "select * from user";
     private static final String DELETE_USERS_SQL = "delete from user where id = ?;";
+    private static final String SELECT_USER_BY_USERNAME = "select id,name,phone,address,email,password,Role from user where username = ?;";
+
     private static final String UPDATE_USERS_SQL = "update user set" +
             " username=?" +
             ",password=?" +
@@ -166,6 +168,37 @@ public class UserDAO implements IUserDAO {
         }
         return rowUpdated;
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        User user = null;
+        // Step 1: Establishing a Connection
+        try (Connection connection = connectMySQL.getConnection();
+             // Step 2:Create a statement using connection object
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME);) {
+            preparedStatement.setString(1, username);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String email = rs.getString("email");
+                int role = rs.getInt("Role");
+                user = new User(id,username, password, name, phone,address,email,role);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return user;
+    }
+
+
 
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
