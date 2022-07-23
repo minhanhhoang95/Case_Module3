@@ -17,4 +17,5 @@ public interface IUserDAO {
     public boolean updateUser(User user) throws SQLException;
     List<User> getNumberPage(int offset, int noOfRecords)throws ClassNotFoundException,SQLException;
     User getUserByUsername(String username);
+    List<User> getNumberPage(int offset, int noOfRecords, String name) throws ClassNotFoundException, SQLException;
 }

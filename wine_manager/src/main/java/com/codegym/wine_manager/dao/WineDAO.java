@@ -18,10 +18,10 @@ public class WineDAO implements IWineDAO {
     private int noOfRecords;
 
     private static final String INSERT_WINE_SQL = "INSERT INTO wine" +
-            "(title,quantity,price,description) VALUES " +
-            " (?, ?, ?,?);";
+            "(title,quantity,price,image,description) VALUES " +
+            " (?, ?, ?,?,?);";
 
-    private static final String SELECT_WINE_BY_ID = "select title,quantity,price,description" +
+    private static final String SELECT_WINE_BY_ID = "select title,quantity,price,image,description" +
             " from wine where id =?";
     private static final String SELECT_ALL_WINE = "select * from wine";
     private static final String DELETE_WINE_SQL = "delete from wine where id = ?;";
@@ -29,6 +29,7 @@ public class WineDAO implements IWineDAO {
             " title=?" +
             ",quantity=?" +
             ",price=?" +
+            ",image= ?"+
             ",description=?" +
             " where id = ?;";
 
@@ -36,11 +37,15 @@ public class WineDAO implements IWineDAO {
 
     }
 
-
+    @Override
     public int getNoOfRecords() {
         return noOfRecords;
     }
 
+
+//    "INSERT INTO wine" +
+//            "(title,quantity,price,image,description) VALUES " +
+//            " (?, ?, ?,?,?);";
     @Override
     public void insertWine(Wine wine) throws SQLException {
         System.out.println(INSERT_WINE_SQL);
@@ -49,7 +54,8 @@ public class WineDAO implements IWineDAO {
             preparedStatement.setString(1, wine.getTitle());
             preparedStatement.setInt(2, wine.getQuantity());
             preparedStatement.setDouble(3, wine.getPrice());
-            preparedStatement.setString(4, wine.getDescription());
+            preparedStatement.setString(4,wine.getImage());
+            preparedStatement.setString(5, wine.getDescription());
 
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
@@ -70,8 +76,9 @@ public class WineDAO implements IWineDAO {
                 String title = rs.getString("title");
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
+                String image = rs.getString("image");
                 String description = rs.getString("description");
-                wine=new Wine(title,quantity,price,description);
+                wine = new Wine(title, quantity, price,image, description);
 
             }
         } catch (SQLException e) {
@@ -92,8 +99,9 @@ public class WineDAO implements IWineDAO {
                 String title = rs.getString("title");
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
+                String image = rs.getString("image");
                 String description = rs.getString("description");
-                wines.add(new Wine(id,title,quantity,price,description));
+                wines.add(new Wine(id, title, quantity, price,image, description));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -113,16 +121,17 @@ public class WineDAO implements IWineDAO {
     }
 
     @Override
-    public boolean       updateWine(@NotNull Wine wine) throws SQLException {
+    public boolean updateWine(@NotNull Wine wine) throws SQLException {
         boolean rowUpdated;
         try (Connection connection = connectMySQL.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_WINE_SQL);) {
 
-            statement.setString(1,wine.getTitle());
+            statement.setString(1, wine.getTitle());
             statement.setInt(2, wine.getQuantity());
             statement.setDouble(3, wine.getPrice());
-            statement.setString(4, wine.getDescription());
-            statement.setInt(5,wine.getId());
+            statement.setString(4,wine.getImage());
+            statement.setString(5, wine.getDescription());
+            statement.setInt(6, wine.getId());
 
             rowUpdated = statement.executeUpdate() > 0;
         }
@@ -144,6 +153,7 @@ public class WineDAO implements IWineDAO {
             wine.setTitle(rs.getString("title"));
             wine.setQuantity(rs.getInt("quantity"));
             wine.setPrice(rs.getDouble("price"));
+            wine.setImage(rs.getString("image"));
             wine.setDescription(rs.getString("description"));
 
             list.add(wine);

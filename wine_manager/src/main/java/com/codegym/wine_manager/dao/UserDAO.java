@@ -20,8 +20,16 @@ public class UserDAO implements IUserDAO {
             " from user where id =?";
     private static final String SELECT_ALL_USERS = "select * from user";
     private static final String DELETE_USERS_SQL = "delete from user where id = ?;";
-    private static final String SELECT_USER_BY_USERNAME = "select id,name,phone,address,email,password,Role from user where username = ?;";
-
+    private static final String SELECT_USER_BY_USERNAME = "select u.id,u.username,u.password,u.name,u.email, u.phone,u.address,u.role \n "
+            + "    		 from user as u inner join role as r\n"
+            + "    		where u.username = ? and u.Role = r.id;";
+    private static final String SELECT_USER_BY_EMAIL = "select u.id,u.username,u.password,u.name,u.email, u.phone,u.address,u.role\n"
+            + "    		 from user as u inner join role as r\n"
+            + "    		where u.email = ? and u.Role = r.id;";
+    private static final String SELECT_USER_BY_PHONE = "select u.id,u.username,u.password,u.name,u.email, u.phone,u.address,u.Role\n"
+            + "    		 from user as u inner join role as r\n"
+            + "    		where u.phone = ? and u.Role = r.id;";
+    private static final String SEARCH_BY_NAME_TYPE = "SELECT * FROM user  WHERE  name LIKE ? OR phone LIKE ? OR email LIKE ? ; ";
     private static final String UPDATE_USERS_SQL = "update user set" +
             " username=?" +
             ",password=?" +
@@ -82,7 +90,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(5, user.getAddress());
             preparedStatement.setString(6, user.getEmail());
             preparedStatement.setInt(7, user.getRole());
-            System.out.println(preparedStatement);
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
@@ -190,7 +198,7 @@ public class UserDAO implements IUserDAO {
                 String address = rs.getString("address");
                 String email = rs.getString("email");
                 int role = rs.getInt("Role");
-                user = new User(id,username, password, name, phone,address,email,role);
+                user = new User(id, username, password, name, phone, address, email, role);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -198,7 +206,101 @@ public class UserDAO implements IUserDAO {
         return user;
     }
 
+    public User selectUserByEmail(String email) {
+        User user = null;
 
+        try (Connection connection = connectMySQL.getConnection();
+
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_EMAIL);) {
+            preparedStatement.setString(1, email);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                int role = rs.getInt("Role");
+                user = new User(id, username, password, name, phone, address, email, role);
+
+                return user;
+            }
+            return null;
+        } catch (SQLException e) {
+            printSQLException(e);
+            return null;
+
+        }
+
+    }
+
+    public User selectUserByPhone(String phone) {
+        User user = null;
+
+        try (Connection connection = connectMySQL.getConnection();
+
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_PHONE);) {
+            preparedStatement.setString(1, phone);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                int role = rs.getInt("Role");
+                user = new User(id, username, password, name, phone, address, email, role);
+
+                return user;
+            }
+            return null;
+        } catch (SQLException e) {
+            printSQLException(e);
+            return null;
+
+        }
+
+    }
+
+    @Override
+    public List<User> getNumberPage(int offset, int noOfRecords, String name) throws ClassNotFoundException, SQLException {
+        Connection connection = connectMySQL.getConnection();
+        System.out.println("numberpage");
+
+        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM user where name LIKE ? OR phone LIKE ? OR email LIKE ? limit " + offset + "," + noOfRecords;
+        List<User> list = new ArrayList<>();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, '%' + name + '%');
+        ps.setString(2, '%' + name + '%');
+        ps.setString(3, '%' + name + '%');
+
+        System.out.println(this.getClass() + " getNumberPage() query: " + ps);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setFullName(rs.getString("name"));
+            user.setAddress(rs.getString("address"));
+            user.setPhone(rs.getString("phone"));
+            user.setEmail(rs.getString("email"));
+            user.setRole(rs.getInt("Role"));
+            list.add(user);
+        }
+        rs = ps.executeQuery("SELECT FOUND_ROWS()");
+        if (rs.next()){
+            this.noOfRecords = rs.getInt(1);
+        }
+        connection.close();
+        return list;
+    }
 
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {

@@ -1,6 +1,8 @@
 package com.codegym.wine_manager.model;
 
 import javax.management.relation.Role;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.time.Instant;
 
 public class User {
@@ -39,14 +41,15 @@ public class User {
         this.address = address;
         this.email = email;
     }
-    public User(String username, String password, String fullName, String phone, String address, String email,int role) {
+
+    public User(String username, String password, String fullName, String phone, String address, String email, int role) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.phone = phone;
         this.address = address;
         this.email = email;
-        this.role=role;
+        this.role = role;
     }
 
     public int getId() {
@@ -57,6 +60,9 @@ public class User {
         this.id = id;
     }
 
+    @NotEmpty
+    //>8 ko kí tự đặc biệt
+    @Pattern(regexp = "^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$", message = "Format username not right")
     public String getUsername() {
         return username;
     }
@@ -65,6 +71,9 @@ public class User {
         this.username = username;
     }
 
+    @NotEmpty
+// >8 gồm chữ và số
+    @Pattern(regexp = "^([a-zA-Z0-9]{8,}$)", message = "Format password not right")
     public String getPassword() {
         return password;
     }
@@ -73,6 +82,9 @@ public class User {
         this.password = password;
     }
 
+    @NotEmpty
+//chữ Hoa đầu tiên
+    @Pattern(regexp = "^([A-Z]+[a-z]*[ ]?)+$", message = "Format password not right")
     public String getFullName() {
         return fullName;
     }
@@ -81,6 +93,9 @@ public class User {
         this.fullName = fullName;
     }
 
+    @NotEmpty
+//số 0 đầu số thứ 2 lớn hơn 0
+    @Pattern(regexp = "^[0][1-9][0-9]{8}$", message = "Format phone not right")
     public String getPhone() {
         return phone;
     }
@@ -89,6 +104,7 @@ public class User {
         this.phone = phone;
     }
 
+    @NotEmpty
     public String getAddress() {
         return address;
     }
@@ -97,6 +113,8 @@ public class User {
         this.address = address;
     }
 
+    @NotEmpty
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$", message = "Format phone not right")
     public String getEmail() {
         return email;
     }
@@ -128,6 +146,7 @@ public class User {
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
+
     @Override
     public String toString() {
         return String.format("%d,%s,%s,%s,%s,%s,%s,%s,%s,%s",

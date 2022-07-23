@@ -95,29 +95,30 @@
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="review-content-section">
+                                                    <input type="hidden" value="${user.getId()}" name="id" >
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-user"
                                                                                            aria-hidden="true"></i></span>
                                                         <input type="text" class="form-control" placeholder="User Name"
-                                                               name="username">
+                                                               name="username" value="${user.getUsername()}">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-edit"
                                                                                            aria-hidden="true"></i></span>
                                                         <input type="text" class="form-control" placeholder="Password"
-                                                               name="password">
+                                                               name="password" value="${user.getPassword()}">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-user"
                                                                                            aria-hidden="true"></i></span>
                                                         <input type="text" class="form-control" placeholder="Full Name"
-                                                               name="name">
+                                                               name="name" value="${user.getFullName()}">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-new-file"
                                                                                            aria-hidden="true"></i></span>
                                                         <input type="text" class="form-control" placeholder="Phone"
-                                                               name="phone">
+                                                               name="phone" value="${user.getPhone()}">
                                                     </div>
 
                                                 </div>
@@ -128,14 +129,14 @@
                                                         <span class="input-group-addon"><i class="icon nalika-edit"
                                                                                            aria-hidden="true"></i></span>
                                                         <input type="text" class="form-control" placeholder="Address"
-                                                               name="address">
+                                                               name="address" value="${user.getAddress()}">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i
                                                                 class="icon nalika-favorites-button"
                                                                 aria-hidden="true"></i></span>
                                                         <input type="text" class="form-control" placeholder="Email"
-                                                               name="email">
+                                                               name="email" value="${user.getEmail()}">
                                                     </div>
 
                                                     <select name="Role"
@@ -165,6 +166,9 @@
                                             </div>
                                         </div>
                                     </form>
+                                </div>
+                                <div style="color: red">
+                                    ${errors}
                                 </div>
                                 <div class="product-tab-list tab-pane fade" id="reviews">
                                     <div class="row">

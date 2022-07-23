@@ -91,7 +91,7 @@
                             </ul>
                             <div id="myTabContent" class="tab-content custom-product-edit">
                                 <div class="product-tab-list tab-pane fade active in" id="description">
-                                    <form method="post">
+                                    <form method="post" enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="review-content-section">
@@ -124,7 +124,15 @@
                                                         <input type="text" class="form-control" placeholder="Description"
                                                                name="description">
                                                     </div>
-
+                                                    <div class="form-row">
+                                                        <label class="col-lg-2 col-form-label" for="examplefileinput"></label>
+                                                        <div class="col-lg-12">
+                                                            <input accept="image/*" type="file" class="form-control" id="examplefileinput" name="image"
+                                                                   style="color: black ">
+                                                            <img style="width: 200px; heigh: 150px; margin-top:10px; " id="blah" src="#"
+                                                                 alt="Image Product"/>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,6 +152,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <script>
+                                            examplefileinput.onchange = evt => {
+                                                const [file] = examplefileinput.files
+                                                if (file) {
+                                                    blah.src = URL.createObjectURL(file)
+                                                }
+                                            }
+                                        </script>
                                     </form>
                                 </div>
                                 <div class="product-tab-list tab-pane fade" id="reviews">

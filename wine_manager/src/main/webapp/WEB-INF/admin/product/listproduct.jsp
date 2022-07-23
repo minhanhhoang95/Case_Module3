@@ -94,6 +94,7 @@
                                 <th>Title</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Image</th>
                                 <th>Description</th>
                                 <th>Actions</th>
                             </tr>
@@ -103,8 +104,8 @@
                                     <td><c:out value="${wine.getTitle()}"/></td>
                                     <td><c:out value="${wine.getQuantity()}"/></td>
                                     <td><c:out value="${wine.getPrice()}"/></td>
+                                    <td><img src="${wine.getImage()}"></td>
                                     <td><c:out value="${wine.getDescription()}"/></td>
-
                                     <td>
                                         <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"> <a href="/wines?action=edit&id=${wine.id}" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></button>
                                         <button data-toggle="tooltip" title="Delete" class="pd-setting-ed"><a onclick=" showMessage(${wine.id})"><i class="fa fa-trash-o" aria-hidden="true"></i></a></button>

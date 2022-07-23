@@ -17,4 +17,5 @@ public interface IWineDAO {
 
     public boolean updateWine(Wine wine) throws SQLException;
     List<Wine> getNumberPage(int offset, int noOfRecords)throws ClassNotFoundException,SQLException;
+    public int getNoOfRecords();
 }

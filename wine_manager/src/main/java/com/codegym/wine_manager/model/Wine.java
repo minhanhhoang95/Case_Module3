@@ -7,6 +7,7 @@ public class Wine {
     private String title;
     private int quantity;
     private double price;
+    private String image;
     private String description;
     private Instant createdAt;
     private Instant updatedAt;
@@ -15,18 +16,20 @@ public class Wine {
 
     }
 
-    public Wine(int id, String title, int quantity, double price, String description) {
+    public Wine(int id, String title, int quantity, double price,String image, String description) {
         this.id = id;
         this.title = title;
         this.quantity = quantity;
         this.price = price;
+        this.image=image;
         this.description = description;
     }
 
-    public Wine(String title, int quantity, double price, String description) {
+    public Wine(String title, int quantity, double price,String image, String description) {
         this.title = title;
         this.quantity = quantity;
         this.price = price;
+        this.image=image;
         this.description = description;
     }
 
@@ -70,6 +73,14 @@ public class Wine {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getDescription() {
