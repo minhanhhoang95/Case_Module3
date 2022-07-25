@@ -1,5 +1,11 @@
 package com.codegym.wine_manager.model;
 
+import org.hibernate.validator.constraints.Length;
+import org.intellij.lang.annotations.Pattern;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.time.Instant;
 
 public class Wine {
@@ -50,7 +56,7 @@ public class Wine {
     public void setId(int id) {
         this.id = id;
     }
-
+@NotEmpty(message = "Please don't it blank")
     public String getTitle() {
         return title;
     }
@@ -58,6 +64,9 @@ public class Wine {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Min(value = 1 , message = " > 0")
+    @Max(value = 1000000 , message = " < 999999")
 
     public int getQuantity() {
         return quantity;
@@ -67,6 +76,8 @@ public class Wine {
         this.quantity = quantity;
     }
 
+@Min(value = 1 , message = " > 0")
+@Max(value = 1000000 , message = " < 1000000")
     public double getPrice() {
         return price;
     }

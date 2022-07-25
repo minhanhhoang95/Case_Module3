@@ -65,6 +65,10 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <!-- toast -->
+    <script src="assets\libs\toastr\toastr.min.js"></script>
+    <script src="assets\js\pages\toastr.init.js"></script>
 </head>
 
 <body>
@@ -98,14 +102,15 @@
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-user"
                                                                                            aria-hidden="true"></i></span>
+                                                        <input type="hidden" value="${wine.getId()}" name="id" >
                                                         <input type="text" class="form-control" placeholder="Title"
-                                                               name="title">
+                                                               name="title" value="${wine.getTitle()}">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i class="icon nalika-edit"
                                                                                            aria-hidden="true"></i></span>
                                                         <input type="text" class="form-control" placeholder="Quantity"
-                                                               name="quantity">
+                                                               name="quantity" value="${wine.getQuantity()}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -115,22 +120,22 @@
                                                         <span class="input-group-addon"><i class="icon nalika-edit"
                                                                                            aria-hidden="true"></i></span>
                                                         <input type="text" class="form-control" placeholder="Price"
-                                                               name="price">
+                                                               name="price" value="${wine.getPrice()}">
                                                     </div>
                                                     <div class="input-group mg-b-pro-edt">
                                                         <span class="input-group-addon"><i
                                                                 class="icon nalika-favorites-button"
                                                                 aria-hidden="true"></i></span>
                                                         <input type="text" class="form-control" placeholder="Description"
-                                                               name="description">
+                                                               name="description" value="${wine.getDescription()}">
                                                     </div>
                                                     <div class="form-row">
                                                         <label class="col-lg-2 col-form-label" for="examplefileinput"></label>
                                                         <div class="col-lg-12">
                                                             <input accept="image/*" type="file" class="form-control" id="examplefileinput" name="image"
-                                                                   style="color: black ">
+                                                                   style="color: black " value="${wine.getImage()}">
                                                             <img style="width: 200px; heigh: 150px; margin-top:10px; " id="blah" src="#"
-                                                                 alt="Image Product"/>
+                                                                 alt="Image Wine"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -152,6 +157,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <jsp:include page="/WEB-INF/toastr/toastr.jsp"></jsp:include>
                                         <script>
                                             examplefileinput.onchange = evt => {
                                                 const [file] = examplefileinput.files
@@ -161,6 +167,9 @@
                                             }
                                         </script>
                                     </form>
+                                </div>
+                                <div style="color: red">
+                                    ${errors}
                                 </div>
                                 <div class="product-tab-list tab-pane fade" id="reviews">
                                     <div class="row">
@@ -493,5 +502,6 @@
     ============================================ -->
 <script src="js/main.js"></script>
 </body>
+<jsp:include page="/WEB-INF/admin/layout/vendor.jsp"></jsp:include>
 
 </html>

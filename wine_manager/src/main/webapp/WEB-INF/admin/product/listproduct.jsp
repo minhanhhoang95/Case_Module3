@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -103,7 +104,8 @@
                                     <td><c:out value="${wine.getId()}"/></td>
                                     <td><c:out value="${wine.getTitle()}"/></td>
                                     <td><c:out value="${wine.getQuantity()}"/></td>
-                                    <td><c:out value="${wine.getPrice()}"/></td>
+<%--                                    <td><c:out value="${wine.getPrice()}"/></td>--%>
+                                    <td><fmt:formatNumber value="${wine.getPrice()}" type="currency" pattern="#,### $"/></td>
                                     <td><img src="${wine.getImage()}"></td>
                                     <td><c:out value="${wine.getDescription()}"/></td>
                                     <td>
@@ -150,12 +152,12 @@
 
                                 <c:if test="${requestScope.currentPage != 1}">
                                     <li class="page-item"><a class="page-link"
-                                                             href="/users?page=${requestScope.currentPage - 1}">Previous</a>
+                                                             href="/users?page=${requestScope.currentPage - 1}&search=${requestScope.search}">Previous</a>
                                     </li>
                                 </c:if>
                                 <c:forEach begin="1" end="${noOfPages}" var="i">
                                     <c:choose>
-                                        <c:when test="${requestScope.currentPage eq i}">
+                                        <c:when test="${requestScope.currentPage eq i}&search=${requestScope.search}">
                                             <li class="page-item"><a class="page-link"
                                                                      href="/wines?page=${i}">${i}</a></li>
                                         </c:when>
@@ -165,9 +167,9 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
-                                <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
+                                <c:if test="${requestScope.currentPage lt requestScope.noOfPages}&search=${requestScope.search}">
                                     <li class="page-item"><a class="page-link"
-                                                             href="/wines?page=${requestScope.currentPage + 1}">Next</a>
+                                                             href="/wines?page=${requestScope.currentPage + 1}&search=${requestScope.search}">Next</a>
                                     </li>
                                 </c:if>
                             </ul>

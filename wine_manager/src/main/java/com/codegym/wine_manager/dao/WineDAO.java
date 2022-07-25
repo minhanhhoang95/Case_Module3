@@ -5,10 +5,12 @@ import com.codegym.wine_manager.model.User;
 import com.codegym.wine_manager.model.Wine;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +31,17 @@ public class WineDAO implements IWineDAO {
             " title=?" +
             ",quantity=?" +
             ",price=?" +
-            ",image= ?"+
+            ",image=?" +
             ",description=?" +
             " where id = ?;";
 
     public WineDAO() {
 
+    }
+    public static String displayVND(BigDecimal price) {
+        String patternVND = ",###₫";
+        DecimalFormat decimalFormat = new DecimalFormat(patternVND);
+        return decimalFormat.format(price);
     }
 
     @Override
@@ -43,7 +50,7 @@ public class WineDAO implements IWineDAO {
     }
 
 
-//    "INSERT INTO wine" +
+    //    "INSERT INTO wine" +
 //            "(title,quantity,price,image,description) VALUES " +
 //            " (?, ?, ?,?,?);";
     @Override
@@ -54,7 +61,7 @@ public class WineDAO implements IWineDAO {
             preparedStatement.setString(1, wine.getTitle());
             preparedStatement.setInt(2, wine.getQuantity());
             preparedStatement.setDouble(3, wine.getPrice());
-            preparedStatement.setString(4,wine.getImage());
+            preparedStatement.setString(4, wine.getImage());
             preparedStatement.setString(5, wine.getDescription());
 
             System.out.println(preparedStatement);
@@ -78,7 +85,7 @@ public class WineDAO implements IWineDAO {
                 double price = rs.getDouble("price");
                 String image = rs.getString("image");
                 String description = rs.getString("description");
-                wine = new Wine(title, quantity, price,image, description);
+                wine = new Wine(title, quantity, price, image, description);
 
             }
         } catch (SQLException e) {
@@ -101,7 +108,7 @@ public class WineDAO implements IWineDAO {
                 double price = rs.getDouble("price");
                 String image = rs.getString("image");
                 String description = rs.getString("description");
-                wines.add(new Wine(id, title, quantity, price,image, description));
+                wines.add(new Wine(id, title, quantity, price, image, description));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -120,6 +127,13 @@ public class WineDAO implements IWineDAO {
         return rowDeleted;
     }
 
+    //    private static final String UPDATE_WINE_SQL = "update wine set" +
+//            " title=?" +
+//            ",quantity=?" +
+//            ",price=?" +
+//            ",image= ?"+
+//            ",description=?" +
+//            " where id = ?;";
     @Override
     public boolean updateWine(@NotNull Wine wine) throws SQLException {
         boolean rowUpdated;
@@ -129,7 +143,7 @@ public class WineDAO implements IWineDAO {
             statement.setString(1, wine.getTitle());
             statement.setInt(2, wine.getQuantity());
             statement.setDouble(3, wine.getPrice());
-            statement.setString(4,wine.getImage());
+            statement.setString(4, wine.getImage());
             statement.setString(5, wine.getDescription());
             statement.setInt(6, wine.getId());
 
@@ -144,7 +158,6 @@ public class WineDAO implements IWineDAO {
 //        System.out.println("numberpage");
         String query = "SELECT SQL_CALC_FOUND_ROWS * FROM wine limit " + offset + "," + noOfRecords;
         List<Wine> list = new ArrayList<>();
-
         PreparedStatement ps = connection.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -155,14 +168,12 @@ public class WineDAO implements IWineDAO {
             wine.setPrice(rs.getDouble("price"));
             wine.setImage(rs.getString("image"));
             wine.setDescription(rs.getString("description"));
-
             list.add(wine);
         }
         rs = ps.executeQuery("SELECT FOUND_ROWS()");
         if (rs.next()) {
             this.noOfRecords = rs.getInt(1);
         }
-
         connection.close();
         return list;
     }

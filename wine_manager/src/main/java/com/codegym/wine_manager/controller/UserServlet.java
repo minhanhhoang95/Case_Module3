@@ -212,7 +212,7 @@ public class UserServlet extends HttpServlet {
         Map<String, String> hashMap = new HashMap<String, String>();  // Luu lai truong nao bi loi va loi gi
 
 
-        System.out.println(this.getClass() + " insertUser with validate");
+//        System.out.println(this.getClass() + " insertUser with validate");
         try {
             user.setId(Integer.parseInt(req.getParameter("id")));
             String username = req.getParameter("username");

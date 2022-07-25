@@ -136,8 +136,15 @@
                                                                value="<c:out value='${wine.getDescription()}' />"
                                                                name="description">
                                                     </div>
-
-
+                                                </div>
+                                                <div class="form-row">
+                                                    <label class="col-lg-2 col-form-label" for="examplefileinput"></label>
+                                                    <div class="col-lg-12">
+                                                        <input accept="image/*" type="file" class="form-control" id="examplefileinput" name="image"
+                                                               style="color: green "  />">
+                                                        <img style="width: 200px; heigh: 150px; margin-top:10px; " id="blah" src="${wine.getImage()}"
+                                                             alt="Image Wine"/>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

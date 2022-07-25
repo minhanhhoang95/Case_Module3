@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="all-content-wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -53,7 +56,7 @@
                                                             </div>
                                                             <div class="message-content">
                                                                 <span class="message-date">16 Sept</span>
-                                                                <h2>Advanda Cro</h2>
+                                                                <h2></h2>
                                                                 <p>Please done this project as soon possible.</p>
                                                             </div>
                                                         </a>
@@ -168,7 +171,7 @@
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
                                                class="nav-link dropdown-toggle">
                                                 <i class="icon nalika-user"></i>
-                                                <span class="admin-name">Advanda Cro</span>
+                                                <span class="admin-name">${userLogin.getUsername()}</span>
                                                 <i class="icon nalika-down-arrow nalika-angle-dw"></i>
                                             </a>
                                             <ul role="menu"
@@ -185,7 +188,7 @@
                                                 <li><a href="#"><span class="icon nalika-settings author-log-ic"></span>
                                                     Settings</a>
                                                 </li>
-                                                <li><a href="login.jsp"><span
+                                                <li><a href="/logout"><span
                                                         class="icon nalika-unlocked author-log-ic"></span> Log Out</a>
                                                 </li>
                                             </ul>
