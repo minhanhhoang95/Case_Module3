@@ -152,12 +152,12 @@
 
                                 <c:if test="${requestScope.currentPage != 1}">
                                     <li class="page-item"><a class="page-link"
-                                                             href="/users?page=${requestScope.currentPage - 1}&search=${requestScope.search}">Previous</a>
+                                                             href="/users?page=${requestScope.currentPage - 1}">Previous</a>
                                     </li>
                                 </c:if>
                                 <c:forEach begin="1" end="${noOfPages}" var="i">
                                     <c:choose>
-                                        <c:when test="${requestScope.currentPage eq i}&search=${requestScope.search}">
+                                        <c:when test="${requestScope.currentPage eq i}">
                                             <li class="page-item"><a class="page-link"
                                                                      href="/wines?page=${i}">${i}</a></li>
                                         </c:when>
@@ -167,9 +167,9 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
-                                <c:if test="${requestScope.currentPage lt requestScope.noOfPages}&search=${requestScope.search}">
+                                <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                                     <li class="page-item"><a class="page-link"
-                                                             href="/wines?page=${requestScope.currentPage + 1}&search=${requestScope.search}">Next</a>
+                                                             href="/wines?page=${requestScope.currentPage + 1}">Next</a>
                                     </li>
                                 </c:if>
                             </ul>

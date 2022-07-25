@@ -188,6 +188,9 @@
                                         </div>
                                     </form>
                                 </div>
+                                <div style="color: red">
+                                    ${errors}
+                                </div>
                                 <div class="product-tab-list tab-pane fade" id="reviews">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
