@@ -92,7 +92,7 @@
                             </ul>
                             <div id="myTabContent" class="tab-content custom-product-edit">
                                 <div class="product-tab-list tab-pane fade active in" id="description">
-                                    <form method="post">
+                                    <form method="post" enctype='multipart/form-data'>
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="review-content-section">
@@ -141,9 +141,10 @@
                                                     <label class="col-lg-2 col-form-label" for="examplefileinput"></label>
                                                     <div class="col-lg-12">
                                                         <input accept="image/*" type="file" class="form-control" id="examplefileinput" name="image"
-                                                               style="color: green "  />">
+                                                               style="color: green "  value="${wine.getImage()}"/>
+<%--                                                        <input type="hidden" value="${wine.getImage()}" name="image">--%>
                                                         <img style="width: 200px; heigh: 150px; margin-top:10px; " id="blah" src="${wine.getImage()}"
-                                                             alt="Image Wine"/>
+                                                             alt="Image Wine" value="${wine.getImage()}" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,6 +164,9 @@
                                             </div>
                                         </div>
                                     </form>
+                                </div>
+                                <div style="color: red">
+                                    ${errors}
                                 </div>
                                 <div class="product-tab-list tab-pane fade" id="reviews">
                                     <div class="row">

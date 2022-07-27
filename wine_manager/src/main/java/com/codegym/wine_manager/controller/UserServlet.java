@@ -368,7 +368,7 @@ public class UserServlet extends HttpServlet {
 
             Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
 
-            System.out.println("User: " + user);
+//            System.out.println("User: " + user);
 
             if (!constraintViolations.isEmpty()) {
 

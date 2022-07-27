@@ -127,6 +127,19 @@ public class WineDAO implements IWineDAO {
         return rowDeleted;
     }
 
+//    public static void main(String[] args) {
+//        WineDAO wineDAO = new WineDAO();
+//
+//        Wine wine = new Wine(44,"test Update",1000,99999,"test thuwr","image\\ruou-st-remy-vsop.jpg");
+//
+//        try {
+//          boolean newWine =   wineDAO.updateWine(wine);
+//
+//            System.out.println(newWine);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
     //    private static final String UPDATE_WINE_SQL = "update wine set" +
 //            " title=?" +
 //            ",quantity=?" +

@@ -269,7 +269,6 @@ public class WineServlet extends HttpServlet {
 
         }
 
-
             ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
             Validator validator = validatorFactory.getValidator();
 
@@ -335,43 +334,124 @@ public class WineServlet extends HttpServlet {
 
     private void updateWine(@NotNull HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
-        int id = Integer.parseInt(req.getParameter("id"));
-        String title = req.getParameter("title");
-        int quantity = Integer.parseInt(req.getParameter("quantity"));
-        double price = Double.parseDouble(req.getParameter("price"));
-        String description = req.getParameter("description");
-        String image = "image\\" +  req.getParameter("image");
-//        for (Part part : req.getParts()) {
+//        int id = Integer.parseInt(req.getParameter("id"));
+//        String title = req.getParameter("title");
+//        int quantity = Integer.parseInt(req.getParameter("quantity"));
+//        double price = Double.parseDouble(req.getParameter("price"));
+//        String description = req.getParameter("description");
+//        String image = "image\\" +  req.getParameter("image");
+//
+//        System.out.println(image);
+//        Wine book = new Wine(id, title, quantity, price,image,description);
+//        iWineDAO.updateWine(book);
+//        List<Wine> wineList = iWineDAO.selectAllWine();
+//        req.setAttribute("wineList",wineList);
+//        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/admin/product/editproduct.jsp");
+//        dispatcher.forward(req, resp);
+//
+////        resp.sendRedirect("/wines");
+
+
+        Wine wine = new Wine();
+        boolean flag = true;
+        Map<String, String> hashMap = new HashMap<String, String>();
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            wine.setId(Integer.parseInt(req.getParameter("id")));
+            String title = req.getParameter("title");
+            wine.setTitle(title);
+            int quantity = Integer.parseInt(req.getParameter("quantity"));
+            wine.setQuantity(quantity);
+            double price = Double.parseDouble(req.getParameter("price"));
+            wine.setPrice(price);
+            String description= req.getParameter("description");
+            wine.setDescription(description);
+            String image = null;
+            for (Part part : req.getParts()) {
 //            System.out.println("Context type: " + part.getContentType());
 //            System.out.println("Name of part: " + part.getName());
-//            if (part.getName().equals("image")) {
-//                String fileName = extractFileName(part);
-//                // refines the fileName in case it is an absolute path
-//                fileName = new File(fileName).getName();
-////                part.getInputStream()
-//
-//                if (fileName.equals("")) {
-//                    image = req.getParameter("image");
-//                } else {
-//                    part.write("D:\\Case_Module3\\wine_manager\\src\\main\\webapp\\image\\" + fileName);
-//                    String servletRealPath = this.getServletContext().getRealPath("/") + "\\image\\" + fileName;
-//                    System.out.println("servletRealPath :" + servletRealPath);
-//                    part.write(servletRealPath);
-//                    image = "image\\" + fileName;
-////                    newProduct.setImage("image/" + fileName);
-//                }
-//            }
-//
-//        }
-        System.out.println(image);
-        Wine book = new Wine(id, title, quantity, price,image,description);
-        iWineDAO.updateWine(book);
-        List<Wine> wineList = iWineDAO.selectAllWine();
-        req.setAttribute("wineList",wineList);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/admin/product/editproduct.jsp");
-        dispatcher.forward(req, resp);
+                if (part.getName().equals("image")) {
+                    String fileName = extractFileName(part);
+                    // refines the fileName in case it is an absolute path
+                    fileName = new File(fileName).getName();
+//                part.getInputStream()
 
-//        resp.sendRedirect("/wines");
+                    if (fileName.equals("")) {
+                        image = "image\\" +"beefeater-24-london-dry-gin-2194.jpg";
+//                        image = req.getParameter("image");
+                    } else {
+                        part.write("D:\\Case_Module3\\wine_manager\\src\\main\\webapp\\image\\" + fileName);
+                        String servletRealPath = this.getServletContext().getRealPath("/") + "\\image\\" + fileName;
+                        System.out.println("servletRealPath :" + servletRealPath);
+                        part.write(servletRealPath);
+                        image = "image\\" + fileName;
+//                    newProduct.setImage("image/" + fileName);
+                    }
+                }
+
+            }
+
+
+            ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+            Validator validator = validatorFactory.getValidator();
+
+            Set<ConstraintViolation<Wine>> constraintViolations = validator.validate(wine);
+
+            if (!constraintViolations.isEmpty()) {
+
+                errors = "<ul>";
+                // constraintViolations is has error
+                for (ConstraintViolation<Wine> constraintViolation : constraintViolations) {
+                    errors += "<li>" + constraintViolation.getPropertyPath() + " " + constraintViolation.getMessage()
+                            + "</li>";
+                }
+                errors += "</ul>";
+
+
+                req.setAttribute("wine", wine);
+                req.setAttribute("errors", errors);
+
+                List<Role> listRole = iRoleDAO.selectAllRole();
+                req.setAttribute("listRole", listRole);
+
+                req.getRequestDispatcher("/WEB-INF/admin/product/editproduct.jsp").forward(req, resp);
+            } else {
+
+
+                if (flag) {
+
+                    Wine newWine = new Wine(id,title, quantity, price, image, description);
+//                    System.out.println("Vao day chua: " +  newWine.toString());
+                    System.out.println(image);
+                    iWineDAO.updateWine(newWine);
+
+                    req.setAttribute("message", "Upload File Success!");
+
+                    req.getRequestDispatcher("/WEB-INF/admin/product/editproduct.jsp").forward(req, resp);
+
+                } else {
+
+                    errors = "<ul>";
+
+                    hashMap.forEach(new BiConsumer<String, String>() {
+                        @Override
+                        public void accept(String keyError, String valueError) {
+                            errors += "<li>" + valueError
+                                    + "</li>";
+
+                        }
+                    });
+                    errors += "</ul>";
+
+                    req.setAttribute("wine", wine);
+                    req.setAttribute("errors", errors);
+
+                    req.getRequestDispatcher("/WEB-INF/admin/product/editproduct.jsp").forward(req, resp);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private String extractFileName(Part part) {

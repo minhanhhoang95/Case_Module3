@@ -152,7 +152,7 @@
 
                                 <c:if test="${requestScope.currentPage != 1}">
                                     <li class="page-item"><a class="page-link"
-                                                             href="/users?page=${requestScope.currentPage - 1}">Previous</a>
+                                                             href="/wines?page=${requestScope.currentPage - 1}">Previous</a>
                                     </li>
                                 </c:if>
                                 <c:forEach begin="1" end="${noOfPages}" var="i">
